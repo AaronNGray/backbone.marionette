@@ -44,9 +44,15 @@ function buildRegionFromDefinition(definition, defaults) {
 }
 
 function buildRegionFromObject(definition) {
-  const RegionClass = definition.regionClass
+  const RegionClass = definition.regionClass;
 
   const options = _.omit(definition, 'regionClass');
+
+  const fields = definition.fields;
+
+  if (fields) {
+    options.model = _.pick(this.getModel(), fields);
+  }
 
   return new RegionClass(options);
 }
